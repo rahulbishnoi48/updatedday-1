@@ -4,7 +4,7 @@ function up()
                 var arr=str.split(' ')
                 for(let i=0;i<arr.length;++i)
                 {
-                    arr[i]=parseInt(arr[i],10);
+                    arr[i]=Number(arr[i]);
                 }
                 var length=arr.length
                 console.log(str)
