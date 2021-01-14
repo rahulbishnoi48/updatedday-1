@@ -1,43 +1,64 @@
-function startAnalytics() {
-    let optionSelected = Number(document.getElementById("option").value);
-    let originalData = document.getElementById("data").value.split(',');
+"use strict"
+let originalData = [];
+let map = new Map();
+
+function storeData() {
+    originalData = document.getElementById("data").value.split(',');
     for(let i=0; i<originalData.length; i++) {
         originalData[i] = Number(originalData[i].trim());
     }
-    let ans;
-    switch(optionSelected) {
-        case 1 : 
-                    ans = upFunction(originalData);
-                    break;
-        case 2 : 
-                    ans = downFunction(originalData);
-                     break;
-        case 3 : 
-                    ans = maxFunction(originalData);
-                    break;
-        case 4 : 
-                    ans = minFunction(originalData);
-                    break;
-        case 5 : 
-                    ans = sumFunction(originalData);
-                    break;
-        case 6 : 
-                    ans = medianFunction(originalData);
-                    break;
-        case 7 :  
-                    ans = meanFunction(originalData);
-                    break;
-        case 8 : 
-                    ans = stdevFunction(originalData);
-                    break;
-        default :
-                    alert("Please recheck your option");
+    map.clear();
+}
+
+function startAnalytics() {
+    let optionSelected = Number(document.getElementById("option").value);
+    let ans = getAns(optionSelected);
+    document.getElementById("results").innerHTML = "Ans:  " + ans;
+}
+
+function getAns(choice) {
+    
+    if(map.get(choice) == undefined) {
+        let result;
+        console.log("in if");
+        switch(choice) {
+            case 1 : 
+                        result = upFunction(originalData);
+                        break;
+            case 2 : 
+                        result = downFunction(originalData);
+                        break;
+            case 3 : 
+                        result = maxFunction(originalData);
+                        break;
+            case 4 : 
+                        result = minFunction(originalData);
+                        break;
+            case 5 : 
+                        result = sumFunction(originalData);
+                        break;
+            case 6 : 
+                        result = medianFunction(originalData);
+                        break;
+            case 7 :  
+                        result = meanFunction(originalData);
+                        break;
+            case 8 : 
+                        result = stdevFunction(originalData);
+                        break;
+            default :
+                        alert("Please recheck your option");
+        }
+
+        map.set(choice, result);
     }
-    document.getElementById("results").innerHTML = "Ans : " + ans;
+
+    return map.get(choice);
 }
 
 function upFunction(data) {
     // to arrange in asec order
+
     let upData = data.sort(function(a,b) {
         return a-b;
     });
@@ -46,24 +67,30 @@ function upFunction(data) {
 
 function downFunction(data) {
     // to arrange in desc order
-    let downData = data.sort(function(a,b) {
-        return b-a;
+
+    let downData = data.sort(function(b,a) {
+        return a-b;
     });
     return downData;
 }
 
 function maxFunction(data) {
     // to calc max of given elements
-    return (downFunction(data)[0]);
+
+    let upArray = getAns(1);
+    return upArray[upArray.length-1];
 }
 
 function minFunction(data) {
     // to calc max of given elements
-    return (upFunction(data)[0]);
+    
+    let upArray = getAns(1);
+    return upArray[0];
 }
 
 function sumFunction(data) {
     // sum of all no's
+    
     let sum = 0;
     for(let i=0; i<data.length; i++) {
         sum += data[i];
@@ -73,7 +100,8 @@ function sumFunction(data) {
 
 function medianFunction(data) {
     // to calc median : if odd return mid else sum of 2 mid
-    data = upFunction(data);
+
+    data = getAns(1);
     let indexHalf = Math.floor(data.length/2);
     if(data.length%2) {
         return data[indexHalf];
@@ -84,12 +112,14 @@ function medianFunction(data) {
 
 function meanFunction(data) {
     // mean = sum/N
-    return ((sumFunction(data)/data.length).toFixed(3));
+    
+    let sum = getAns(5);
+    return (sum/data.length).toFixed(3);
 }
 
 function stdevFunction(data) {
-
-    let mean = meanFunction(data);
+    
+    let mean = getAns(7); 
     let deviation = 0;
     for(let i=0; i<data.length; i++) {
         deviation += Math.pow((data[i]-mean),2);
