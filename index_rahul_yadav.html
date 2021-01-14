@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analysis</title>
+</head>
+<body>
+    <h1>Data Analytics Assignment</h1>
+
+    <p>Enter numbers (space separated): </p>
+    <input type = "text" id = "data" name = "data"><br><br>
+    <label for="option">Choose a option:</label>
+    <select name="option" id="option"> 
+        <option value="1">Up (Ascending order)</option>
+        <option value="2">Down (Descending order)</option> 
+        <option value="3">Max </option>
+        <option value="4">Min</option>
+        <option value="5">Sum</option>
+        <option value="6">Median</option>
+        <option value="7">Mean</option>
+        <option value="8">Stdev (Standard devisation)</option>
+    </select>
+    <button onclick="storeData();startAnalytics(); ">Submit</button>
+    <h3> Answer will be shown below: </h3>
+    <input type="text" id="results" name="results" disabled>
+    <script src= "scripts/updatedScript.js"></script>
+</body>
+</html>
