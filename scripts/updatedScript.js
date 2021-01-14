@@ -1,19 +1,26 @@
 "use strict"
 let originalData = [];
+
 let map = new Map();
 
 function storeData() {
-    originalData = document.getElementById("data").value.split(',');
-    for(let i=0; i<originalData.length; i++) {
-        originalData[i] = Number(originalData[i].trim());
+    originalData = document.getElementById("data").value.split(' ').map(Number);
+    
+    if(originalData.some(isNaN)){
+        alert("please give correct input")
     }
-    map.clear();
 }
 
 function startAnalytics() {
     let optionSelected = Number(document.getElementById("option").value);
     let ans = getAns(optionSelected);
-    document.getElementById("results").innerHTML = "Ans:  " + ans;
+    if(ans.some(isNaN))
+    {
+        document.getElementById("results").value = "wrong inputs";
+    }
+    else{
+        document.getElementById("results").value = ans;
+    }
 }
 
 function getAns(choice) {

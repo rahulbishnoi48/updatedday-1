@@ -8,25 +8,22 @@
 <body>
     <h1>Data Analytics Assignment</h1>
 
-    <p>Enter numbers (commma separated): </p>
+    <p>Enter numbers (space separated): </p>
     <input type = "text" id = "data" name = "data"><br><br>
-    <button onclick="storeData()">Store Number</button><br>
-    <p>Enter your option: </p>
-    <input type = "text" id = "option" name = "option"><br><br>
-    <button onclick="startAnalytics()">Submit</button>
-
-    <p>Enter Numbers and option(from the given list) <br>
-        1. Up (Ascending order) <br>
-        2. Down (Descending order)<br>
-        3. Max <br>
-        4. Min <br>
-        5. Sum <br>
-        6. Median <br>
-        7. Mean <br>
-        8. Stdev (Standard devisation)
-    </p>
+    <label for="option">Choose a option:</label>
+    <select name="option" id="option"> 
+        <option value="1">Up (Ascending order)</option>
+        <option value="2">Down (Descending order)</option> 
+        <option value="3">Max </option>
+        <option value="4">Min</option>
+        <option value="5">Sum</option>
+        <option value="6">Median</option>
+        <option value="7">Mean</option>
+        <option value="8">Stdev (Standard devisation)</option>
+    </select>
+    <button onclick="storeData();startAnalytics(); ">Submit</button>
     <h3> Answer will be shown below: </h3>
-    <div id = "results"></div>
+    <input type="text" id="results" name="results" disabled>
     <script src= "scripts/updatedScript.js"></script>
 </body>
 </html>
