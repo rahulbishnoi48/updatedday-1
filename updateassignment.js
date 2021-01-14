@@ -1,94 +1,125 @@
+const optionMenu = document.querySelector(".operation");
+const startAnalysis = document.querySelector(".analyse");
+const result = document.querySelector(".result");
+const originalData = document.querySelector(".data");
+
+startAnalysis.addEventListener("click", startComputation);
+
+function startComputation() {
+    let data = converter(originalData.value);
+    let choice = Number(optionMenu.value);
+    let ans;
+    switch(choice) {
+        case 1:
+            ans = up(data);
+            break;
+        case 2:
+            ans = down(data);
+            break;
+        case 3:
+            ans = max(data);
+            break;
+        case 4:
+            ans = min(data);
+            break;
+        case 5:
+            ans = sum(data);
+            break;
+        case 6:
+            ans = mean(data);
+            break;
+        case 7:
+            ans = median(data);
+            break;
+        case 8:
+            ans = stdev(data);
+            break;
+        default:
+            alert('invalid option')
+            break;
+    }
+    ans = "Your result is: " + ans;
+    result.innerHTML = ans;
+}
+
 var converter=(str)=>{
-    var arr=str.split(' ').map(Number)
+    var arr=str.split(' ');
     for(let i=0;i<arr.length;++i)
     {
-        if(arr[i]==NaN){
+        if(arr[i]===NaN){
             alert('please check the value again ')
+        } else {
+            arr[i] = Number(arr[i].trim());
         }
     }
-    var total=0
-    for(i=0;i<arr.length;++i)
-    {
-        total+=arr[i]
-    }
-    return [arr,total]
+    return arr;
 }
-function up()
+function up(arr1)
 {
-    var arr=converter(document.getElementById("text1").value)
-    var arr1=arr[0]
     arr1.sort((a,b)=>a-b)
     var string=" "
     for (let j of arr1)
     {
         string+=j+" ";
     }
-    alert(string)
+    return string;
 }
-function down()
+function down(arr1)
 {
-    var arr=converter(document.getElementById("text1").value)
-    var arr1=arr[0]
-    arr1.sort((a,b)=>a+b)
+    arr1.sort((a,b)=>b-a)
     var string=" "
     for (let j of arr1)
     {
         string+=j+" ";
     }
-    alert(string)
+    return string;
 }
-function max()
+function max(arr1)
 {
-    var arr=converter(document.getElementById("text1").value)
-    alert("maximum of all = "+Math.max(...arr[0]))
+    return Math.max(...arr1);
 }
-function min()
+function min(arr1)
 {
-    var arr=converter(document.getElementById("text1").value)
-    alert("minimum of all = "+Math.min(...arr[0]))
+    return Math.min(...arr1);
 }            
-function sum()
+function sum(arr1)
 {
-    var arr=converter(document.getElementById("text1").value)
-    alert("sum of all = "+arr[1])
+    let sum = 0;
+    for (let i=0; i<arr1.length; i++) {
+        sum += arr1[i];
+    }
+    return sum;
 }
-function median()
+function median(arr1)
 {
-    var arr=converter(document.getElementById("text1").value)
-    var arr1=arr[0]
     arr1.sort((a,b)=>a-b)
     length=arr1.length
     var median=0
+    let midIndex = Math.floor(length/2);
     if(length%2==0)
     {
-        median= ((arr1[length/2]+arr1[(length+1)/2])/2)
+        median = (arr1[midIndex] + arr1[midIndex-1])/2;
     }
     else
     {
-        median=arr1[(length+1)/2]
+        median=arr1[midIndex];
     }
-    alert("median of array = "+median)
+    return median;
 }
-function mean()
+function mean(arr1)
 {
-    var arr=converter(document.getElementById("text1").value)
-    var arr1=arr[0]
-    var total=arr[1]
+    var total=sum(arr1);
     let meanarr=total/arr1.length
-    alert("mean of array = "+meanarr.toFixed(3))
+    return meanarr.toFixed(3);
 }
-function stdev()
+function stdev(arr1)
 {
-    var arr=converter(document.getElementById("text1").value)
-    var arr1=arr[0]
-    var total=arr[1];
-    let meanarr=total/arr1.length
+    let meanarr=mean(arr1);
     let sd=0
     for(let i of arr1)
     {
         sd+=Math.pow(arr1[i]-meanarr,2)
     }
     sd/=length
-    sd=Math.sqrt(sd)
-    alert("standard deviation of array = "+sd.toFixed(3))
+    return Math.sqrt(sd).toFixed(3);
 }
